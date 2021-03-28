@@ -12,13 +12,14 @@ export function createEffects(
     state$: Observable<State>, 
 ): Observable<Action> {
     const timerEffect$ = interval(INTERVAL).pipe(
+        withLatestFrom(state$),
+        filter(([a,state])=>!state.pause),
         mapTo(actionTimer())
     );
     
     const changeSlideEffect$ = timerEffect$.pipe(
         withLatestFrom(state$),
-        mergeMap(([a, s]) => s.progress >= DELAY ? of(actionNext()) : EMPTY),
-        take(5),
+        mergeMap(([a, s]) => s.progress >= DELAY ? of(actionNext()) : EMPTY)
     );
     
     const messageEffect$ = actions$.pipe(
