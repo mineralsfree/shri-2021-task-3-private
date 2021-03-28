@@ -27,7 +27,7 @@ function receiveMessage({ data }: MessageEvent<XMessage>) {
 function onDocumentClick(e: MouseEvent) {
     if (e.target instanceof HTMLElement) {
         let target = e.target;
-        while(target && !target.dataset.action) {
+        while (target.parentElement && !target.dataset.action && target !== document.body) {
             target = target.parentElement;
         }
 

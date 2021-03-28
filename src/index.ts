@@ -25,6 +25,7 @@ function onMessage({ data }: MessageEvent<XMessage>) {
 
 const player = document.querySelector<HTMLDivElement>('.player');
 const frames = stories.map(({ alias, data }) => initIframe(player, iframe => {
+    sendMessage(iframe, messageSetTheme("dark"));
     sendMessage(iframe, messageUpdate(alias, data));
     iframe.contentWindow.addEventListener('message', onMessage);
 }));
@@ -55,5 +56,5 @@ createThemeSelector(state$)
 document.querySelector<HTMLDivElement>('.set-light').addEventListener('click', () => dispatch(actionSetTheme('light')));
 document.querySelector<HTMLDivElement>('.set-dark').addEventListener('click', () => dispatch(actionSetTheme('dark')));
 document.querySelector<HTMLDivElement>('.prev').addEventListener('click', () => dispatch(actionPrev()));
-document.querySelector<HTMLDivElement>('.next').addEventListener('click', () => dispatch(actionPrev()));
+document.querySelector<HTMLDivElement>('.next').addEventListener('click', () => dispatch(actionNext()));
 document.querySelector<HTMLDivElement>('.restart').addEventListener('click', () => dispatch(actionRestart()));
