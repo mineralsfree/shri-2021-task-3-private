@@ -12,6 +12,8 @@ export function createEffects(
     state$: Observable<State>, 
 ): Observable<Action> {
     const timerEffect$ = interval(INTERVAL).pipe(
+        withLatestFrom(state$),
+        filter(([a,state])=>!state.pause),
         mapTo(actionTimer())
     );
     
